@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content=">Digital Editions Footprint - a project by Digital Humanities Craft OG"
+    />
+    <title>
+      Digital Editions Footprint - a project by Digital Humanities Craft OG
+    </title>
+    <!-- Minimized CSS for Bootstrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vsc-dark-plus.min.css"
+      integrity="sha512-ML8rkwYTFNcblPFx+VLgFIT2boa6f8DDP6p6go4+FT0/mJ8DCbCgi6S0UdjtzB3hKCr1zhU+YVB0AHhIloZP8Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="dhcraft_logo_invert.svg" />
+  </head>
+  <style>
+    ol > li {
+      margin-bottom: 0.5rem;
+    }
+    summary {
+      font-size: larger;
+      padding-bottom: 1rem;
+    }
+  </style>
+  <body>
+    <header class="container text-center my-5">
+      <h1 class="mb-3">
+        Digital Editions Footprint - a project by <br /><a
+          href="https://dhcraft.org" class="text-decoration-none"
+          >Digital Humanities Craft OG<img
+            src="dhcraft_logo_invert_white.svg"
+            alt="Digital Humanities Craft OG Logo"
+            class="img-fluid ms-2"
+            style="max-width: 70px"
+        /></a>
+      </h1>
+    </header>
+    <main class="container">
+      <section class="mt-5">
+        <div id="toc" class="text-center"></div>
+      </section>
+      <section class="mt-5">
+        <h2>Über das Projekt</h2>
+        <p>
+          Das Projekt "Digital Editions Footprint" untersucht den ökologischen
+          Fußabdruck von digitalen Editionen in den Geisteswissenschaften. Es
+          wird von der Digital Humanities Craft OG durchgeführt und ist Teil des
+          Forschungsschwerpunkts "Nachhaltigkeit in den Digital Humanities". Das
+          Projekt untersucht die Umweltauswirkungen von digitalen Editionen und
+          entwickelt Strategien und Werkzeuge, um diese zu reduzieren. Ziel ist
+          es, die Nachhaltigkeit von digitalen Editionen zu verbessern und
+          Forschende und Editionsprojekte zu unterstützen, umweltfreundlichere
+          Praktiken zu etablieren.
+        </p>
+      </section>
+      <section class="mt-5">
+        <h2>Zielgruppe</h2>
+
+        <ul>
+          <li>Bestehende Editionen, die Optimierungen vornehmen möchten.</li>
+          <li>Neue Editionen, die von Anfang an korrekt handeln möchten.</li>
+        </ul>
+      </section>
+      <section class="mt-5">
+        <h2>Digitale Editionen</h2>
+        <p>
+          Digitale Editionen sind elektronische Versionen von Texten, Dokumenten
+          oder literarischen Werken, die mithilfe digitaler Technologien
+          erstellt, bearbeitet und publiziert werden. Sie nutzen das Potenzial
+          des Internets und digitaler Speichermedien, um Zugang zu und
+          Interaktion mit Materialien zu bieten, die sonst schwer zugänglich
+          wären. Anders als traditionelle, gedruckte Editionen können digitale
+          Editionen vielfältige Zusatzinformationen wie Kommentare,
+          Übersetzungen, multimediale Inhalte und interaktive Elemente
+          integrieren. Sie ermöglichen es, verschiedene Revisionen und Versionen
+          eines Textes nebeneinander zu betrachten und bieten oft Werkzeuge zur
+          Textanalyse. Digitale Editionen sind ein wichtiges Werkzeug in den
+          Geisteswissenschaften, insbesondere in der Literaturwissenschaft,
+          Geschichte und Philologie, da sie die Forschung und Lehre durch
+          erweiterte Zugänglichkeit und neue Analysemöglichkeiten bereichern.
+        </p>
+      </section>
+      <section class="mt-5">
+        <h2>Unser Ansatz</h2>
+        <p>
+          Die Integration eines einfachen CO2-Rechners in digitale Editionen
+          verkörpert für uns einen pragmatischen Ansatz zur Adressierung des
+          ökologischen Fußabdrucks in der digitalen Welt. Indem es die
+          CO2-Emissionen sichtbar macht, schärft das Tool das Bewusstsein für
+          die Umweltauswirkungen digitaler Inhalte und motiviert zu einem
+          verantwortungsbewussteren Umgang mit digitalen Ressourcen. Es dient
+          als Basis für datengetriebene Entscheidungen, um Websites
+          energieeffizienter zu gestalten und fördert damit aktiv
+          umweltfreundliche Praktiken. Schlüssel ist unserer Meinung nach die
+          einfache Einbindung des Tools in bestehende und vor allem auch
+          zukünftigen Projekten. Durch den simplen copy/paste Ansatz bietet das
+          Tool einen niederschwelligen Einstieg in die Reduzierung des digitalen
+          Fußabdrucks und leistet somit einen Beitrag zum umweltbewussten
+          Handeln im digitalen Zeitalter in den Digital Humanities.
+        </p>
+      </section>
+      <section class="mt-5">
+        <h2>Das "Tool"</h2>
+        <p>
+          Wir haben minimalen JavaScript-Code entwickelt, um direkt auf jeder
+          beliebigen HTML-Seite die Menge an CO2 anzuzeigen.
+        </p>
+
+        <pre><button id="copyButton">Kopieren</button>
+            <code class="language-javascript" id="codeBlock">
+// Importing the @tgwf/co2 (co2.js - https://developers.thegreenwebfoundation.org/co2js) library from jsDelivr CDN
+import {
+  co2,
+  hosting,
+  averageIntensity,
+} from "https://cdn.jsdelivr.net/npm/@tgwf/co2@latest/dist/esm/index.js";
+
+(async () =&gt; {
+  // Initialize elements and library instances
+  const container = document.getElementById("co2-calculator-wrapper");
+
+  const swd = new co2({ model: "swd" });
+  const oneByte = new co2({ model: "1byte" });
+
+  // Calculate emissions
+  const emissions_swd_per_byte = swd.perByte(1000000000, true); //per GB
+  const emissions_1byte_per_byte = oneByte.perByte(1000000000, true); //per GB
+
+  // Page size calculation in bytes and converting it to KB
+  const page_size = document.documentElement.outerHTML.length;
+  const page_size_in_kb = (page_size / 1000).toFixed(0); // Convert to KB and fix to 0 decimal places
+  const page_size_in_mb = (page_size / 1e6).toFixed(2); // Convert to MB and fix to 2 decimal places
+  const emissions_swd_page_size = swd.perByte(page_size, true);
+
+  // Hosting check - https://developers.thegreenwebfoundation.org/co2js/tutorials/check-hosting/
+  const domain = window.location.hostname;
+  const hosting_domain = await hosting.check(domain);
+
+  // Austria average intensity - Change Country with ISO Code - All countries are represented by their respective &lt;a href="https://www.iso.org/obp/ui/#search"&gt;Alpha-3 ISO country code&lt;/a&gt;
+  const { AUT } = averageIntensity.data;
+
+  // Dynamic content creation
+  function addContentBlock(contents) {
+    const details = document.createElement("details");
+    const summary = document.createElement("summary");
+    summary.textContent = "CO2 Emissions Information for this page"; // Customize your summary text here
+    details.appendChild(summary);
+
+    contents.forEach((content) =&gt; {
+      const element = document.createElement("p");
+      element.innerHTML = content.html;
+      element.id = content.id;
+      details.appendChild(element);
+    });
+
+    container.appendChild(details);
+  }
+
+  // Example usage
+  addContentBlock([
+    {
+      id: "co2_element",
+      html: `CO2-Emissionen von 1GB sind: &lt;b&gt;${emissions_swd_per_byte}&lt;/b&gt; gCO2 pro kWh (&lt;a href="https://sustainablewebdesign.org/calculating-digital-emissions/"&gt;swd Modell&lt;/a&gt;)`,
+    },
+    {
+      id: "co2_element2",
+      html: `CO2-Emissionen von 1GB sind: &lt;b&gt;${emissions_1byte_per_byte}&lt;/b&gt; gCO2 pro kWh (&lt;a href="https://theshiftproject.org/en/lean-ict-2/"&gt;1byte Modell&lt;/a&gt;)`,
+    },
+    {
+      id: "co2_page",
+      html: `Diese Seite ist ${page_size} Bytes groß (das sind ca. ${page_size_in_kb} KB oder ${page_size_in_mb} MB), die Menge an CO2 beträgt: &lt;b&gt;${emissions_swd_page_size.toFixed(
+        6
+      )}&lt;/b&gt; gCO2 pro kWh (&lt;a href="https://sustainablewebdesign.org/calculating-digital-emissions/"&gt;swd Modell&lt;/a&gt;)`,
+    },
+    {
+      id: "hosting",
+      html: `Wird unsere '${domain}' auf grüner Energie gehostet? &lt;a href="https://www.thegreenwebfoundation.org/support/how-does-the-green-web-check-work"/&gt;&lt;b&gt;${hosting_domain}&lt;/b&gt;&lt;/a&gt;`,
+    },
+    {
+      id: "average",
+      html: `Die durchschnittlichen CO2-Emissionen in &lt;a href="https://www.iso.org/obp/ui/#search"&gt;Österreich&lt;/a&gt; betragen &lt;b&gt;${AUT}&lt;/b&gt; gCO2 pro kWh`,
+    },
+  ]);
+})();</code></pre>
+        <p>
+          Dieser JavaScript-Code verwendet die
+          <a href="https://developers.thegreenwebfoundation.org/co2js"
+            >CO2.js-Bibliothek</a
+          >
+          (<code>@tgwf/co2</code>), um den CO2-Fußabdruck einer Webseite zu
+          berechnen und zu prüfen, ob die Seite auf einem umweltfreundlichen
+          Hosting (Green Hosting) basiert. Der Code läuft asynchron, was
+          bedeutet, dass er Operationen ausführen kann, die auf externe Daten
+          warten, ohne den Rest der Seite beim Laden zu blockieren.
+        </p>
+        <p>
+          Die Bibliothek CO2.js, entwickelt von
+          <a href="https://www.thegreenwebfoundation.org/">
+            The Green Web Foundation </a
+          >, bietet Werkzeuge zur Abschätzung des CO2-Ausstoßes von digitalen
+          Diensten und Produkten, insbesondere Webseiten. Die Bibliothek basiert
+          auf Forschung und Daten zu den CO2-Emissionen, die mit der
+          Datenübertragung und -speicherung im Internet verbunden sind. Sie
+          ermöglicht es Entwickler*innen, die Umweltauswirkungen ihrer Projekte
+          zu messen und Strategien zur Reduktion des Carbon Footprints zu
+          entwickeln. Die Bibliothek stellt insbesondere zwei Modelle zur
+          Verfügung, um den CO2-Ausstoß zu berechnen: das
+          <code>1byte</code> (OneByte) Modell und das
+          <code>swd</code> (Sustainable Web Design) Modell.
+        </p>
+        <h3 id="1byte-modell">OneByte Modell</h3>
+        <p>
+          Das <code>1byte</code> Modell nutzt eine direkte Umrechnung von
+          übertragenen Datenmengen in CO2-Emissionen, fokussiert sich dabei auf
+          die Energieverbrauchsphasen von Rechenzentren und Netzwerken. Es
+          verwendet eng definierte Systemgrenzen und liefert ein einfaches,
+          direktes Ergebnis basierend auf der Datenmenge.
+        </p>
+        <h3 id="swd-small-web-device-modell">
+          SWD (Sustainable Web Design) Modell
+        </h3>
+        <p>
+          Das <code>swd</code> Modell, kurz für Sustainable Web Design, Bietet
+          eine umfassende Berechnung, die die gesamte Energieverwendung von
+          Datenzentren, Netzwerken und Nutzergeräten einbezieht sowie die
+          Gesamtenergie, die zur Erstellung dieser Systeme benötigt wird. Es
+          berücksichtigt vollständige Lebenszyklusemissionen, inklusive
+          Produktion und Versorgung, und liefert detaillierte, granulare
+          Emissionsschätzungen.
+        </p>
+        <h3 id="nutzung-der-modelle-im-code">Nutzung der Modelle im Code</h3>
+        <p>
+          Im bereitgestellten Codebeispiel werden Instanzen der
+          <code>co2</code> Klasse mit beiden Modellen (<code>swd</code> und
+          <code>1byte</code>) erstellt, um den CO2-Ausstoß pro Byte für 1GB
+          Datenübertragung zu berechnen. Darüber hinaus wird das
+          <code>swd</code> Modell verwendet, um die CO2-Emissionen der aktuellen
+          Seite basierend auf ihrer Größe zu schätzen. Diese Ansätze ermöglichen
+          eine differenzierte Analyse der Umweltauswirkungen einer Webseite,
+          indem sowohl die durchschnittlichen globalen Emissionen als auch die
+          spezifischen Bedingungen der Nutzung auf kleinen Webgeräten
+          berücksichtigt werden.
+        </p>
+
+        <h3 id="import-der-bibliothek">Import der Bibliothek</h3>
+        <ul>
+          <li>
+            Der Code importiert zunächst die benötigten Funktionen
+            (<code>co2</code>, <code>hosting</code>,
+            <code>averageIntensity</code>) von der
+            <code>@tgwf/co2</code> Bibliothek über das CDN (Content Delivery
+            Network) jsDelivr. Dies ermöglicht es, die neueste Version der
+            Bibliothek direkt im Browser zu verwenden, ohne sie manuell
+            herunterladen zu müssen.
+          </li>
+        </ul>
+        <h3 id="initialisierung-und-berechnung">
+          Initialisierung und Berechnung
+        </h3>
+        <ul>
+          <li>
+            Im nächsten Schritt initialisiert der Code einige Konstanten und
+            Instanzen der <code>co2</code> Klasse mit unterschiedlichen Modellen
+            (<code>swd</code> und <code>1byte</code>), um später den CO2-Ausstoß
+            pro Byte zu berechnen.
+          </li>
+          <li>
+            Es wird der CO2-Ausstoß für 1 Gigabyte (1GB) Daten berechnet, sowohl
+            für das <code>swd</code> als auch für das <code>1byte</code> Modell.
+          </li>
+          <li>
+            Die Größe der aktuellen Seite in Bytes wird berechnet, indem die
+            Länge des HTML-Markups der gesamten Seite ermittelt wird.
+            Anschließend wird der CO2-Ausstoß basierend auf dieser Größe und dem
+            <code>swd</code> Modell berechnet.
+          </li>
+        </ul>
+        <h3 id="-berpr-fung-des-hostings">Überprüfung des Hostings</h3>
+        <ul>
+          <li>
+            Der Code überprüft dann, ob das Hosting der aktuellen Domain
+            (<code>window.location.hostname</code>) auf grüner Energie basiert,
+            indem er die <code>hosting.check</code> Funktion der Bibliothek
+            nutzt. Das Ergebnis dieser Überprüfung wird in einer Variablen
+            gespeichert.
+          </li>
+        </ul>
+        <h3>Ländercodes</h3>
+        <p>
+          Sie können auch jährliche, länderspezifische marginale oder
+          durchschnittliche Netzintensitätsdaten direkt aus CO2.js in Ihre
+          Projekte importieren. In unserem Beispiel wird die durchschnittliche
+          Netzintensität für Österreich (<code>AUT</code>) berechnet.
+        </p>
+        <p>
+          Alle Länder werden durch ihren jeweiligen
+          <a href="https://www.iso.org/obp/ui/#search"
+            >Alpha-3 ISO-Ländercode</a
+          >
+          dargestellt.
+        </p>
+        <h3 id="dynamische-inhalterstellung">Dynamische Inhalterstellung</h3>
+        <ul>
+          <li>
+            Eine Hilfsfunktion <code>addContent</code> wird definiert, um
+            dynamisch Inhalte zu einem Container-Element auf der Webseite
+            hinzuzufügen. Dieser Container wird durch die ID
+            <code>co2-calculator-wrapper</code> identifiziert.
+          </li>
+          <li>
+            Mithilfe dieser Funktion wird für jede der oben berechneten
+            Informationen (CO2-Ausstoß für 1GB, CO2-Ausstoß der aktuellen Seite,
+            Hosting-Informationen, durchschnittliche CO2-Emissionen in
+            Österreich) ein Paragraph (<code>&lt;p&gt;</code>) erstellt und dem
+            Container hinzugefügt.
+          </li>
+        </ul>
+        <h3 id="integration-in-eine-html-seite">
+          Integration in eine HTML-Seite
+        </h3>
+        <p>
+          Um diesen Code direkt in eine HTML-Seite zu integrieren, müssen Sie
+          nur 2 Schritte beachten:
+        </p>
+        <ol>
+          <li>
+            <p>
+              <strong>Container-Element hinzufügen</strong>: Fügen Sie in Ihrer
+              HTML-Datei ein Element mit der ID
+              <code>co2-calculator-wrapper</code> hinzu, wo die dynamisch
+              generierten Inhalte angezeigt werden sollen.
+            </p>
+            <pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">"co2-calculator-wrapper"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+</code></pre>
+          </li>
+          <li>
+            <p>
+              <strong>Script-Tag mit Typ <code>module</code> verwenden</strong>:
+              Da der Code das <code>import</code>-Statement verwendet, müssen
+              Sie den Script-Tag in Ihrer HTML-Datei als
+              <code>type=&quot;module&quot;</code> kennzeichnen, um
+              sicherzustellen, dass der Browser ihn korrekt als ECMAScript-Modul
+              interpretiert.
+            </p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"module"</span>&gt;</span><span class="actionscript">
+  <span class="hljs-comment">// Hier den JavaScript-Code einfügen</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+          </li>
+        </ol>
+        <p>
+          Indem Sie diese Schritte befolgen, können Sie den JavaScript-Code
+          direkt in jede HTML-Seite integrieren. Beachten Sie, dass für die
+          korrekte Funktion des Codes eine Verbindung zum Internet erforderlich
+          ist, da die Bibliothek von einem externen CDN geladen wird.
+        </p>
+      </section>
+      <section class="mt-5">
+        <h2>Empfehlungen</h2>
+        <ol>
+          <li>
+            <strong>Reduzierung digitaler Abhängigkeiten:</strong>
+            <ul>
+              <li>
+                <strong>Evaluierung des Bedarfs:</strong> Bevor Sie neue
+                Abhängigkeiten hinzufügen, bewerten Sie kritisch, ob diese
+                wirklich notwendig sind. Oft können bestehende Tools oder
+                Frameworks bereits die benötigten Funktionen abdecken. Für die
+                Evaluierung des Bedarfs können Tools wie
+                <a href="https://bundlephobia.com/">Bundlephobia</a> helfen, die
+                Größe von npm-Paketen zu verstehen und zu entscheiden, ob eine
+                neue Abhängigkeit wirklich notwendig ist.
+              </li>
+              <li>
+                <strong>Statische Webseiten und Generatoren:</strong> Erwägen
+                Sie den Einsatz von statischen HTML Seiten oder Static Site
+                Generators wie <a href="https://jekyllrb.com">Jekyll</a>,
+                <a href="https://gohugo.io">Hugo</a> oder
+                <a href="https://www.11ty.dev">Eleventy</a>. Statische Seiten
+                laden schneller, sind sicherer und verbrauchen weniger
+                Serverressourcen.
+              </li>
+              <li>
+                <strong>Minimalistische CMS:</strong> Überlegen Sie den Einsatz
+                von leichtgewichtigen Content-Management-Systemen, die weniger
+                Datenbankinteraktionen erfordern und effizienter sind, wie z.B.
+                <a href="https://getgrav.org">Grav</a> oder
+                <a href="https://getkirby.com">Kirby</a>.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong
+              >Minimalistisches Webdesign und Reduktion clientseitiger
+              Dynamik:</strong
+            >
+            <ul>
+              <li>
+                <strong>Weniger ist mehr:</strong> Nutzen Sie ein Design, das
+                auf das Wesentliche reduziert ist, um die Größe der Webseiten zu
+                verringern und die Ladezeiten zu verbessern.
+              </li>
+              <li>
+                <strong>Optimierung von Bildern und Medien:</strong> Verwenden
+                Sie moderne, effiziente Bildformate wie WebP und AVIF und setzen
+                Sie Lazy Loading für Bilder und Videos ein. Tools:
+                <a href="https://afarkas.github.io/lazysizes/">Lazysizes</a>,
+                <a href="https://squoosh.app/">Squoosh</a>,
+                <a href="https://tinypng.com/">TinyPNG</a>.
+              </li>
+              <li>
+                <strong>Vermeidung übermäßiger Skripte:</strong> Verzichten Sie
+                auf schwere JavaScript-Frameworks und Libraries, wenn möglich.
+                Nutzen Sie stattdessen native Web-Technologien und progressive
+                Verbesserung. Inspiration:
+                <a href="http://vanilla-js.com/">Vanilla JS</a>.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Umweltfreundliches Webhosting:</strong>
+            <ul>
+              <li>
+                <strong>Grünes Hosting wählen:</strong> Suchen Sie nach
+                Hosting-Anbietern, die erneuerbare Energiequellen nutzen und
+                sich für Nachhaltigkeit einsetzen, wie z.B.
+                <a href="https://www.greengeeks.com">GreenGeeks</a>.
+              </li>
+              <li>
+                <strong>Energieeffizienz bewerten:</strong> Informieren Sie sich
+                über die Energieeffizienz Ihres Datenzentrums an Ihrer
+                Universität oder Ihres Hosters. Best Practie Beispiel ist etwa
+                <a href="https://kinsta.com">Kinsta</a> für WordPress Seiten,
+                das sich durch hohe Energieeffizienz und den Einsatz
+                erneuerbarer Energien auszeichnet.
+              </li>
+              <li>
+                <strong>Zertifizierungen und Siegel:</strong> Achten Sie auf
+                relevante Umweltzertifikate und Siegel, die das Engagement des
+                Hosters für Nachhaltigkeit bestätigen. Empfohlen:
+                <a href="https://www.thegreenwebfoundation.org/"
+                  >The Green Web Foundation</a
+                >.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Zugänglichkeit und inklusives Design:</strong>
+            <ul>
+              <li>
+                <strong>Barrierefreiheit:</strong> Stellen Sie sicher, dass Ihre
+                Website für Menschen mit unterschiedlichen Fähigkeiten und
+                Bedürfnissen zugänglich ist. Dies schließt die Einhaltung der
+                WCAG (Web Content Accessibility Guidelines) ein. Tools:
+                <a href="https://www.deque.com/axe/"
+                  >axe Accessibility Checker</a
+                >.
+              </li>
+              <li>
+                <strong>Responsive Design:</strong> Implementieren Sie
+                responsive Webdesign-Prinzipien, um sicherzustellen, dass Ihre
+                Webseite auf allen Geräten und Bildschirmgrößen gut
+                funktioniert. Tools:
+                <a href="https://responsivedesignchecker.com/"
+                  >Responsive Web Design Testing Tool</a
+                >. Zusätzlich können Prototyping-Tools wie
+                <a href="https://www.invisionapp.com/">InVision</a> und
+                <a href="https://www.axure.com/">Axure</a> helfen, Design- und
+                Usability-Probleme frühzeitig zu erkennen.
+              </li>
+              <li>
+                <strong>Inklusion von Anfang an:</strong> Berücksichtigen Sie
+                diverse Nutzergruppen in der Planungsphase Ihres Projekts.
+                Diversität in Testgruppen kann helfen, Design- und
+                Usability-Probleme frühzeitig zu identifizieren.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Performance-Optimierung:</strong>
+            <ul>
+              <li>
+                <strong>Caching-Strategien:</strong> Implementieren Sie
+                effektive Caching-Strategien, um die Belastung der Server zu
+                verringern und schnelle Ladezeiten zu gewährleisten. Tools:
+                <a href="https://wordpress.org/plugins/w3-total-cache/"
+                  >W3 Total Cache</a
+                >,
+                <a href="https://wordpress.org/plugins/hummingbird-performance/"
+                  >Hummingbird</a
+                >.
+              </li>
+              <li>
+                <strong>Content Delivery Networks (CDN):</strong> Nutzen Sie
+                CDNs, um Inhalte geografisch näher an den Nutzern zu speichern
+                und somit die Latenz zu verringern, wie z.B.
+                <a href="https://www.cloudflare.com">Cloudflare</a>.
+              </li>
+              <li>
+                <strong>Minimierung von Ressourcen:</strong> Minimieren und
+                komprimieren Sie CSS, JavaScript und HTML-Dateien. Vermeiden Sie
+                unnötigen Code und Kommentare in Produktionsdateien. Tools für
+                die Optimierung von Schriftarten:
+                <a href="https://www.fontsquirrel.com/">FontSquirrel</a>,
+                <a href="https://everythingfonts.com">Everything Fonts</a>.
+                Tools für die Performance-Optimierung:
+                <a
+                  href="https://developers.google.com/speed/pagespeed/insights/"
+                  >Google PageSpeed Insights</a
+                >, <a href="https://www.webpagetest.org/">WebPageTest</a>,
+                <a href="https://github.com/addyosmani/critical">Critical</a>.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Nachhaltige Praktiken und Messungen:</strong>
+            <ul>
+              <li>
+                <strong>CO2-Fußabdruck messen:</strong> Verwenden Sie Tools zur
+                Messung des CO2-Fußabdrucks Ihrer Webseite, um Bereiche mit
+                Verbesserungspotenzial zu identifizieren. Ein Beispiel ist der
+                <a href="https://www.websitecarbon.com"
+                  >Website Carbon Calculator</a
+                >.
+              </li>
+              <li>
+                <strong>Nachhaltigkeitsberichte:</strong> Erstellen Sie
+                regelmäßige Berichte über die Umweltauswirkungen Ihrer
+                Webprojekte und setzen Sie sich Ziele zur Reduzierung.
+              </li>
+              <li>
+                <strong>Bildung und Bewusstsein:</strong> Fördern Sie
+                Bewusstsein für Green Web Design innerhalb Ihres Teams und Ihrer
+                Community. Teilen Sie Best Practices und ermutigen Sie zu
+                nachhaltigeren Ansätzen in der Webentwicklung. Ressourcen:
+                <a href="https://www.sustainablewebdesign.org"
+                  >Sustainable Web Design</a
+                >,
+                <a href="https://www.greenit.org/webinars"
+                  >Green IT Webinar Series</a
+                >.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+      <section class="mt-5">
+        <h2>Bibliografie</h2>
+        <div
+          class="csl-bib-body"
+          style="line-height: 2; padding-left: 1em; text-indent: -1em"
+        >
+          <div class="csl-entry">
+            Baillot, A., &amp; Roeder, T. (2023, Dezember 15).
+            <i
+              >Von der Initiative bis zur Praxis: Die DHd-AG Greening DH und das
+              DHCC Toolkit</i
+            >. https://doi.org/10.5281/zenodo.10392521
+          </div>
+          <div class="csl-entry">
+            Bender, E. M., Gebru, T., McMillan-Major, A., &amp; Shmitchell, S.
+            (2021). On the Dangers of Stochastic Parrots: Can Language Models Be
+            Too Big? &#x1F99C;.
+            <i
+              >Proceedings of the 2021 ACM Conference on Fairness,
+              Accountability, and Transparency</i
+            >, 610&#x2013;623. https://doi.org/10.1145/3442188.3445922
+          </div>
+          <div class="csl-entry">
+            Blauer Engel. (2020).
+            <i
+              >Ressourcen- und energieeffiziente Softwareprodukte (DE-UZ 215).
+              Vergabekriterien</i
+            >.
+            https://www.blauer-engel.de/de/produktwelt/ressourcen-und-energieeffiziente-softwareprodukte
+          </div>
+          <div class="csl-entry">
+            Chapman, K. (2022). The conference conundrum.
+            <i>Chemistry World</i>.
+            https://www.chemistryworld.com/careers/the-conference-conundrum/4014882.article
+          </div>
+          <div class="csl-entry">
+            <i>ChatGPT is growing faster than TikTok</i>. (2023, Februar 1).
+            https://www.cbsnews.com/news/chatgpt-chatbot-tiktok-ai-artificial-intelligence/
+          </div>
+          <div class="csl-entry">
+            <i>Climate Action Community Work Plan 2022-2023</i>. (o.&#xA0;J.).
+            Europeana Pro. Abgerufen 1. Februar 2023, von
+            https://pro.europeana.eu/post/climate-action-community-work-plan-2022-2023
+          </div>
+          <div class="csl-entry">
+            <i>Climate-Friendly Research &#x2013; AQUACLEW</i>. (o.&#xA0;J.).
+            Abgerufen 16. Februar 2022, von
+            https://aquaclew.eu/climate-friendly-research/
+          </div>
+          <div class="csl-entry">
+            Community-run open source tools for video, text, and code
+            collaboration. (2020, April 14). <i>Flavours of Open</i>.
+            https://flavoursofopen.science/community-run-open-source-tools-for-video-and-text-collaboration/
+          </div>
+          <div class="csl-entry">
+            <i>Data Centres and Data Transmission Networks &#x2013; Analysis</i
+            >. (o.&#xA0;J.). IEA. Abgerufen 31. Mai 2023, von
+            https://www.iea.org/reports/data-centres-and-data-transmission-networks
+          </div>
+          <div class="csl-entry">
+            Directorate-General for Research and Innovation (European
+            Commission). (2023).
+            <i
+              >Driving a green, digital &amp; innovative European cultural
+              heritage</i
+            >. Publications Office of the European Union.
+            https://data.europa.eu/doi/10.2777/600577
+          </div>
+          <div class="csl-entry">
+            <i>ethical_web_dev_web.pdf</i>. (o.&#xA0;J.). Abgerufen 1. August
+            2023, von https://edri.org/files/ethical_web_dev_web.pdf
+          </div>
+          <div class="csl-entry">
+            Faber, G. (2021). A framework to estimate emissions from virtual
+            conferences. <i>International Journal of Environmental Studies</i>,
+            <i>78</i>(4), 608&#x2013;623.
+            https://doi.org/10.1080/00207233.2020.1864190
+          </div>
+          <div class="csl-entry">
+            Flohr, M. (o.&#xA0;J.). <i>netzwerk n</i>. Abgerufen 25. Januar
+            2022, von https://www.netzwerk-n.org/
+          </div>
+          <div class="csl-entry">
+            Glausiusz, J. (2021). Rethinking travel in a post-pandemic world.
+            <i>Nature</i>. https://www.nature.com/articles/d41586-020-03649-8
+          </div>
+          <div class="csl-entry">
+            Gr&#xF6;ger, J., &amp; K&#xF6;hn, M. (2014).
+            <i
+              >Dokumentation des Fachgespr&#xE4;chs &#x201C;Nachhaltige
+              Software</i
+            >. Umweltbundesamt.
+            https://www.umweltbundesamt.de/publikationen/nachhaltige-software
+          </div>
+          <div class="csl-entry">
+            Hauke, P., Latimer, K., &amp; Werner, K. U. (Hrsg.). (2013).
+            <i
+              >The Green Library - Die gr&#xFC;ne Bibliothek: The challenge of
+              environmental sustainability - &#xD6;kologische Nachhaltigkeit in
+              der Praxis</i
+            >. DE GRUYTER SAUR. https://doi.org/10.1515/9783110309720
+          </div>
+          <div class="csl-entry">
+            H&#xF6;fner, A., Frick, V., Chan, J., Kurz, C., Santarius, T., &amp;
+            Zahrnt, A. (Hrsg.). (2019).
+            <i
+              >Was Bits und B&#xE4;ume verbindet: Digitalisierung nachhaltig
+              gestalten&#x202F;; Bits &amp; B&#xE4;ume, die Konferenz f&#xFC;r
+              Digitalisierung und Nachhaltigkeit, Technische Universit&#xE4;t
+              Berlin im November 2018</i
+            >. oekom verlag.
+          </div>
+          <div class="csl-entry">
+            Holmes, M., &amp; Takeda, J. (2019).
+            <i>The Prefabricated Website: Who needs a server anyway?</i>
+            https://doi.org/10.5281/ZENODO.3449197
+          </div>
+          <div class="csl-entry">
+            <i>Home</i>. (2023, Juli 31). The Green Web Foundation.
+            https://www.thegreenwebfoundation.org/
+          </div>
+          <div class="csl-entry">
+            Kl&#xF6;wer, M., Hopkins, D., Allen, M., &amp; Higham, J. (2020). An
+            analysis of ways to decarbonize conference travel after COVID-19.
+            <i>Nature</i>. https://www.nature.com/articles/d41586-020-02057-2
+          </div>
+          <div class="csl-entry">
+            Kn&#xF6;dlseder, J., Brau-Nogu&#xE9;, S., Coriat, M., Garnier, P.,
+            Hughes, A., Martin, P., &amp; Tibaldo, L. (2022). Estimate of the
+            carbon footprint of astronomical research infrastructures.
+            <i>arXiv:2201.08748 [astro-ph]</i>. http://arxiv.org/abs/2201.08748
+          </div>
+          <div class="csl-entry">
+            Lange, S., &amp; Santarius, T. (2018).
+            <i
+              >Smarte gr&#xFC;ne Welt? Digitalisierung zwischen
+              &#xDC;berwachung, Konsum und Nachhaltigkeit</i
+            >. Oekom Verlag.
+          </div>
+          <div class="csl-entry">
+            <i
+              >Leitfaden zur umweltfreundlichen &#xF6;ffentlichen Beschaffung
+              von Software - Neufassung 2023 - Website kleine kniffe</i
+            >. (o.&#xA0;J.). Abgerufen 11. August 2023, von
+            https://nachhaltige-beschaffung.com/newsdetails/leitfaden-zur-umweltfreundlichen-%C3%B6ffentlichen-beschaffung-von-software-neufassung-2023.html
+          </div>
+          <div class="csl-entry">
+            <i>leitfragenkatalog-data.pdf</i>. (o.&#xA0;J.). Abgerufen 21.
+            Dezember 2023, von
+            https://www.dfg.de/resource/blob/289478/c77e5c2d7993892e9e19b8d1375e1af7/leitfragenkatalog-data.pdf
+          </div>
+          <div class="csl-entry">
+            Mariette, J., Blanchard, O., Bern&#xE9;, O., &amp; Ben-Ari, T.
+            (2021).
+            <i
+              >An open-source tool to assess the carbon footprint of research</i
+            >
+            [Preprint]. Scientific Communication and Education.
+            https://doi.org/10.1101/2021.01.14.426384
+          </div>
+          <div class="csl-entry">
+            Meunier, C. (2016). <i>Sustainable Software Design</i>.
+            Umweltbundesamt.
+            https://www.umweltbundesamt.de/publikationen/sustainable-software-design
+          </div>
+          <div class="csl-entry">
+            Netzwerk Gr&#xFC;ne Bibliothek. (o.&#xA0;J.).
+            <i>Bibliografie Gr&#xFC;ne Bibliothek</i>. Netzwerk Gr&#xFC;ne
+            Bibliothek. https://www.netzwerk-gruene-bibliothek.de/bibliografie/
+          </div>
+          <div class="csl-entry">
+            &#xD6;rtl, E. (2018).
+            <i
+              >Entwicklung und Anwendung von Bewertungsgrundlagen f&#xFC;r
+              ressourceneffiziente Software unter Ber&#xFC;cksichtigung
+              bestehender Methodik</i
+            >. Umweltbundesamt.
+            https://www.umweltbundesamt.de/publikationen/entwicklung-anwendung-von-bewertungsgrundlagen-fuer
+          </div>
+          <div class="csl-entry">
+            Patterson, D., Gonzalez, J., Le, Q., Liang, C., Munguia, L.-M.,
+            Rothchild, D., So, D., Texier, M., &amp; Dean, J. (o.&#xA0;J.).
+            <i>Carbon Emissions and Large Neural Network Training</i>.
+          </div>
+          <div class="csl-entry">
+            Pendergrass, K. L., Sampson, W., Walsh, T., &amp; Alagna, L. (2019).
+            Toward Environmentally Sustainable Digital Preservation.
+            <i>The American Archivist</i>, <i>82</i>(1), 165&#x2013;206.
+            https://doi.org/10.17723/0360-9081-82.1.165
+          </div>
+          <div class="csl-entry">
+            published, T. P. (2022, Februar 2).
+            <i>The mission to reduce the carbon footprint of astronomy</i>.
+            Space.Com.
+            https://www.space.com/reducing-carbon-footprint-of-astronomy
+          </div>
+          <div class="csl-entry">
+            Ramesohl, S. (2020, Oktober 22).
+            <i>Digitalisierung und Klimawandel</i>. Die Junge Akademie -
+            KlimaLectures #3, online.
+            https://www.youtube.com/watch?v=I2U8YqJYy3E
+          </div>
+          <div class="csl-entry">
+            Report: Digital Reset. (o.&#xA0;J.).
+            <i>D4S - digitalization for sustainability</i>. Abgerufen 20.
+            Oktober 2022, von
+            https://digitalization-for-sustainability.com/digital-reset/
+          </div>
+          <div class="csl-entry">
+            Roussihe, G. (2021, Januar 23).
+            <i
+              >Explications sur l&#x2019;empreinte carbone du streaming et du
+              transfert de donn&#xE9;es</i
+            >. Blog.
+            http://gauthierroussilhe.com/post/explication-streaming.html
+          </div>
+          <div class="csl-entry">
+            Schomaker, G., Janacek, S., &amp; Schlitt, D. (2015). The Energy
+            Demand of Data Centers. In L. M. Hilty &amp; B. Aebischer (Hrsg.),
+            <i>ICT Innovations for Sustainability</i> (Bd. 310, S.
+            113&#x2013;124). Springer International Publishing.
+            https://doi.org/10.1007/978-3-319-09228-7_6
+          </div>
+          <div class="csl-entry">
+            Stallmann, M. (2020).
+            <i>Guide on Green Public Procurement of Software</i>.
+            Umweltbundesamt.
+            https://www.umweltbundesamt.de/publikationen/guide-on-green-public-procurement-of-software
+          </div>
+          <div class="csl-entry">
+            Stroud, J. T., &amp; Feeley, K. J. (2015). Responsible academia:
+            optimizing conference locations to minimize greenhouse gas
+            emissions.
+            <i>Ecography</i>, <i>38</i>(4), 402&#x2013;404.
+            https://doi.org/10.1111/ecog.01366
+          </div>
+          <div class="csl-entry">
+            Tao, Y., Steckel, D., Kleme&#x161;, J. J., &amp; You, F. (2021).
+            Trend towards virtual and hybrid conferences may be an effective
+            climate change mitigation strategy. <i>Nature Communications</i>,
+            <i>12</i>(1), 7324. https://doi.org/10.1038/s41467-021-27251-2
+          </div>
+          <div class="csl-entry">
+            Thaller, A., Schreuer, A., &amp; Posch, A. (2021). Flying High in
+            Academia&#x2014;Willingness of University Staff to Perform
+            Low-Carbon Behavior Change in Business Travel.
+            <i>Frontiers in Sustainability</i>, <i>2</i>.
+            https://doi.org/10.3389/frsus.2021.790807
+          </div>
+          <div class="csl-entry">
+            The Green Web Foundation. (o.&#xA0;J.).
+            <i>The Green Web Foundation</i>.
+            https://www.thegreenwebfoundation.org/
+          </div>
+          <div class="csl-entry">
+            Urai, A. E., &amp; Kelly, C. (2023). Rethinking academia in a time
+            of climate crisis. <i>eLife</i>, <i>12</i>, e84991.
+            https://doi.org/10.7554/eLife.84991
+          </div>
+          <div class="csl-entry">
+            van Ewijk, S., &amp; Hoekman, P. (2021). Emission reduction
+            potentials for academic conference travel.
+            <i>Journal of Industrial Ecology</i>, <i>25</i>(3), 778&#x2013;788.
+            https://doi.org/10.1111/jiec.13079
+          </div>
+          <div class="csl-entry">
+            Wissen, V. B. H. K., &amp; Technik. (2023, Februar 23).
+            <i>Verschlimmert ChatGPT die Klimakrise? Experten warnen</i>.
+            Utopia.de.
+            https://utopia.de/chat-gpt-und-die-klimakrise-experten-warnen-474199/
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="container text-center my-5">
+      <p>
+        <a href="https://dhcraft.org">Digital Humanities Craft OG</a> |
+        <a href="https://dhcraft.org/imprint">Impressum</a>
+      </p>
+      <div id="co2-calculator-wrapper"></div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+
+    <!-- The emissions Tool -->
+    <script type="module">
+      // Importing the @tgwf/co2 (co2.js - https://developers.thegreenwebfoundation.org/co2js) library from jsDelivr CDN
+      import {
+        co2,
+        hosting,
+        averageIntensity,
+      } from "https://cdn.jsdelivr.net/npm/@tgwf/co2@latest/dist/esm/index.js";
+
+      (async () => {
+        // Initialize elements and library instances
+        const container = document.getElementById("co2-calculator-wrapper");
+
+        const swd = new co2({ model: "swd" });
+        const oneByte = new co2({ model: "1byte" });
+
+        // Calculate emissions
+        const emissions_swd_per_byte = swd.perByte(1000000000, true); //per GB
+        const emissions_1byte_per_byte = oneByte.perByte(1000000000, true); //per GB
+
+        // Page size calculation in bytes and converting it to KB
+        const page_size = document.documentElement.outerHTML.length;
+        const page_size_in_kb = (page_size / 1000).toFixed(0); // Convert to KB and fix to 0 decimal places
+        const page_size_in_mb = (page_size / 1e6).toFixed(2); // Convert to MB and fix to 2 decimal places
+        const emissions_swd_page_size = swd.perByte(page_size, true);
+
+        // Hosting check - https://developers.thegreenwebfoundation.org/co2js/tutorials/check-hosting/
+        const domain = window.location.hostname;
+        const hosting_domain = await hosting.check(domain);
+
+        // Austria average intensity - Change Country with ISO Code - All countries are represented by their respective <a href="https://www.iso.org/obp/ui/#search">Alpha-3 ISO country code</a>
+        const { AUT } = averageIntensity.data;
+
+        // Dynamic content creation
+        function addContentBlock(contents) {
+          const details = document.createElement("details");
+          const summary = document.createElement("summary");
+          summary.textContent = "CO2 Emissions Information für diese Website"; // Customize your summary text here
+          details.appendChild(summary);
+
+          contents.forEach((content) => {
+            const element = document.createElement("p");
+            element.innerHTML = content.html;
+            element.id = content.id;
+            details.appendChild(element);
+          });
+
+          container.appendChild(details);
+        }
+
+        // Example usage
+        addContentBlock([
+          {
+            id: "co2_element",
+            html: `CO2-Emissionen von 1GB sind: <b>${emissions_swd_per_byte}</b> gCO2 pro kWh (<a href="https://sustainablewebdesign.org/calculating-digital-emissions/">swd Modell</a>)`,
+          },
+          {
+            id: "co2_element2",
+            html: `CO2-Emissionen von 1GB sind: <b>${emissions_1byte_per_byte}</b> gCO2 pro kWh (<a href="https://theshiftproject.org/en/lean-ict-2/">1byte Modell</a>)`,
+          },
+          {
+            id: "co2_page",
+            html: `Diese Seite ist ${page_size} Bytes groß (das sind ca. ${page_size_in_kb} KB oder ${page_size_in_mb} MB), die Menge an CO2 beträgt: <b>${emissions_swd_page_size.toFixed(
+              6
+            )}</b> gCO2 pro kWh (<a href="https://sustainablewebdesign.org/calculating-digital-emissions/">swd Modell</a>)`,
+          },
+          {
+            id: "hosting",
+            html: `Wird unsere '${domain}' auf grüner Energie gehostet? <a href="https://www.thegreenwebfoundation.org/support/how-does-the-green-web-check-work"/><b>${hosting_domain}</b></a>`,
+          },
+          {
+            id: "average",
+            html: `Die durchschnittlichen CO2-Emissionen in <a href="https://www.iso.org/obp/ui/#search">Österreich</a> betragen <b>${AUT}</b> gCO2 pro kWh`,
+          },
+        ]);
+      })();
+    </script>
+    <!-- Copy Button -->
+    <script>
+      document
+        .getElementById("copyButton")
+        .addEventListener("click", function () {
+          const code = document.getElementById("codeBlock").innerText;
+          navigator.clipboard.writeText(code).then(() => {
+            const originalText = this.innerText;
+            this.innerText = "Kopiert";
+            setTimeout(() => {
+              this.innerText = originalText;
+            }, 2000); // Set the text back after 2 seconds
+          });
+        });
+    </script>
+    <!-- Generates TOC -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const h2Elements = document.querySelectorAll("h2");
+        const toc = document.getElementById("toc");
+
+        // Check if the TOC container exists
+        if (!toc) {
+          console.error("TOC container not found.");
+          return;
+        }
+
+        h2Elements.forEach((element, index) => {
+          // Generate an ID for the h1 element if it doesn't have one
+          if (!element.id) {
+            element.id = `toc-heading-${index}`;
+          }
+
+          // Create a link for the TOC entry
+          const link = document.createElement("a");
+          link.href = `#${element.id}`;
+          link.textContent = element.textContent;
+          toc.appendChild(link);
+
+          // If it's not the last element, add a separator
+          if (index < h2Elements.length - 1) {
+            toc.appendChild(document.createTextNode(" · "));
+          }
+        });
+      });
+    </script>
+    <!-- Generate Bibliography Links -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Select all the '.csl-entry' elements within the section
+        const entries = document.querySelectorAll("section .csl-entry");
+
+        entries.forEach((entry) => {
+          // Use a regular expression to find URLs in the text
+          const urlRegex = /https?:\/\/[^\s]+/g;
+          let entryHtml = entry.innerHTML;
+
+          // Replace URLs found with an <a> tag version
+          entryHtml = entryHtml.replace(urlRegex, function (url) {
+            return `<a href="${url}" target="_blank">${url}</a>`;
+          });
+
+          // Update the entry's HTML with the modified content
+          entry.innerHTML = entryHtml;
+        });
+      });
+    </script>
+  </body>
+</html>
