@@ -40,7 +40,8 @@
     <header class="container text-center my-5">
       <h1 class="mb-3">
         Digital Editions Footprint - a project by <br /><a
-          href="https://dhcraft.org" class="text-decoration-none"
+          href="https://dhcraft.org"
+          class="text-decoration-none"
           >Digital Humanities Craft OG<img
             src="dhcraft_logo_invert_white.svg"
             alt="Digital Humanities Craft OG Logo"
@@ -140,8 +141,25 @@ import {
   const emissions_swd_per_byte = swd.perByte(1000000000, true); //per GB
   const emissions_1byte_per_byte = oneByte.perByte(1000000000, true); //per GB
 
-  // Page size calculation in bytes and converting it to KB
-  const page_size = document.documentElement.outerHTML.length;
+  // Function to calculate total page size in bytes
+  const calculateTotalPageSize = () =&gt; {
+    const resources = performance.getEntriesByType("resource");
+    let totalSizeBytes = 0;
+
+    resources.forEach((resource) =&gt; {
+      totalSizeBytes += resource.transferSize;
+    });
+
+    // Add the size of the document itself
+    const pageSizeInBytes = new Blob([document.documentElement.outerHTML])
+      .size;
+    totalSizeBytes += pageSizeInBytes;
+
+    return totalSizeBytes;
+  };
+
+  // Calculate page size and convert it to KB and MB
+  const page_size = calculateTotalPageSize(); // Using the new method to calculate page size
   const page_size_in_kb = (page_size / 1000).toFixed(0); // Convert to KB and fix to 0 decimal places
   const page_size_in_mb = (page_size / 1e6).toFixed(2); // Convert to MB and fix to 2 decimal places
   const emissions_swd_page_size = swd.perByte(page_size, true);
@@ -150,14 +168,14 @@ import {
   const domain = window.location.hostname;
   const hosting_domain = await hosting.check(domain);
 
-  // Austria average intensity - Change Country with ISO Code - All countries are represented by their respective &lt;a href="https://www.iso.org/obp/ui/#search"&gt;Alpha-3 ISO country code&lt;/a&gt;
+  // Austria average intensity - Change Country with ISO Code
   const { AUT } = averageIntensity.data;
 
   // Dynamic content creation
   function addContentBlock(contents) {
     const details = document.createElement("details");
     const summary = document.createElement("summary");
-    summary.textContent = "CO2 Emissions Information for this page"; // Customize your summary text here
+    summary.textContent = "CO2 Emissions Information für diese Website";
     details.appendChild(summary);
 
     contents.forEach((content) =&gt; {
@@ -174,25 +192,25 @@ import {
   addContentBlock([
     {
       id: "co2_element",
-      html: `CO2-Emissionen von 1GB sind: &lt;b&gt;${emissions_swd_per_byte}&lt;/b&gt; gCO2 pro kWh (&lt;a href="https://sustainablewebdesign.org/calculating-digital-emissions/"&gt;swd Modell&lt;/a&gt;)`,
+      html: `CO2-Emissionen von 1GB sind: <b>${emissions_swd_per_byte}</b> gCO2 pro kWh (<a href="https://sustainablewebdesign.org/calculating-digital-emissions/">swd Modell</a>)`,
     },
     {
       id: "co2_element2",
-      html: `CO2-Emissionen von 1GB sind: &lt;b&gt;${emissions_1byte_per_byte}&lt;/b&gt; gCO2 pro kWh (&lt;a href="https://theshiftproject.org/en/lean-ict-2/"&gt;1byte Modell&lt;/a&gt;)`,
+      html: `CO2-Emissionen von 1GB sind: <b>${emissions_1byte_per_byte}</b> gCO2 pro kWh (<a href="https://theshiftproject.org/en/lean-ict-2/">1byte Modell</a>)`,
     },
     {
       id: "co2_page",
-      html: `Diese Seite ist ${page_size} Bytes groß (das sind ca. ${page_size_in_kb} KB oder ${page_size_in_mb} MB), die Menge an CO2 beträgt pro Besuch: &lt;b&gt;${emissions_swd_page_size.toFixed(
+      html: `Diese Seite ist ${page_size} Bytes groß (das sind ca. ${page_size_in_kb} KB oder ${page_size_in_mb} MB), die Menge an CO2 beträgt pro Besuch: <b>${emissions_swd_page_size.toFixed(
         6
-      )}&lt;/b&gt; gCO2 pro kWh (&lt;a href="https://sustainablewebdesign.org/calculating-digital-emissions/"&gt;swd Modell&lt;/a&gt;)`,
+      )}</b> gCO2 pro kWh (<a href="https://sustainablewebdesign.org/calculating-digital-emissions/">swd Modell</a>)`,
     },
     {
       id: "hosting",
-      html: `Wird unsere '${domain}' auf grüner Energie gehostet? &lt;a href="https://www.thegreenwebfoundation.org/support/how-does-the-green-web-check-work"/&gt;&lt;b&gt;${hosting_domain}&lt;/b&gt;&lt;/a&gt;`,
+      html: `Wird unsere '${domain}' auf grüner Energie gehostet? <a href="https://www.thegreenwebfoundation.org/support/how-does-the-green-web-check-work"><b>${hosting_domain}</b></a>`,
     },
     {
       id: "average",
-      html: `Die durchschnittlichen CO2-Emissionen in &lt;a href="https://www.iso.org/obp/ui/#search"&gt;Österreich&lt;/a&gt; betragen &lt;b&gt;${AUT}&lt;/b&gt; gCO2 pro kWh`,
+      html: `Die durchschnittlichen CO2-Emissionen in <a href="https://www.iso.org/obp/ui/#search">Österreich</a> betragen <b>${AUT}</b> gCO2 pro kWh`,
     },
   ]);
 })();</code></pre>
@@ -209,7 +227,9 @@ import {
         </p>
         <p>
           Die Bibliothek CO2.js, entwickelt von
-          <a href="https://www.thegreenwebfoundation.org/">The Green Web Foundation</a>, bietet Werkzeuge zur Abschätzung des CO2-Ausstoßes von digitalen
+          <a href="https://www.thegreenwebfoundation.org/"
+            >The Green Web Foundation</a
+          >, bietet Werkzeuge zur Abschätzung des CO2-Ausstoßes von digitalen
           Diensten und Produkten, insbesondere Webseiten. Die Bibliothek basiert
           auf Forschung und Daten zu den CO2-Emissionen, die mit der
           Datenübertragung und -speicherung im Internet verbunden sind. Sie
@@ -281,10 +301,14 @@ import {
             für das <code>swd</code> als auch für das <code>1byte</code> Modell.
           </li>
           <li>
-            Die Größe der aktuellen Seite in Bytes wird berechnet, indem die
-            Länge des HTML-Markups der gesamten Seite ermittelt wird.
-            Anschließend wird der CO2-Ausstoß basierend auf dieser Größe und dem
-            <code>swd</code> Modell berechnet.
+            Die Größe der aktuellen Seite in Bytes wird durch eine umfassende
+            Methode berechnet, die sowohl die Größe des HTML-Dokuments selbst
+            als auch die Größen aller extern geladenen Ressourcen wie Bilder,
+            CSS und JavaScript-Dateien berücksichtigt. Dies geschieht durch die
+            Verwendung der Performance API, um die Übertragungsgrößen aller
+            Ressourcen zu summieren, die zur Darstellung der Seite beigetragen
+            haben. Anschließend wird der CO2-Ausstoß basierend auf der gesamten
+            berechneten Seitengröße und dem <code>swd</code> Modell berechnet.
           </li>
         </ul>
         <h3 id="-berpr-fung-des-hostings">Überprüfung des Hostings</h3>
@@ -859,8 +883,25 @@ import {
         const emissions_swd_per_byte = swd.perByte(1000000000, true); //per GB
         const emissions_1byte_per_byte = oneByte.perByte(1000000000, true); //per GB
 
-        // Page size calculation in bytes and converting it to KB
-        const page_size = document.documentElement.outerHTML.length;
+        // Function to calculate total page size in bytes
+        const calculateTotalPageSize = () => {
+          const resources = performance.getEntriesByType("resource");
+          let totalSizeBytes = 0;
+
+          resources.forEach((resource) => {
+            totalSizeBytes += resource.transferSize;
+          });
+
+          // Add the size of the document itself
+          const pageSizeInBytes = new Blob([document.documentElement.outerHTML])
+            .size;
+          totalSizeBytes += pageSizeInBytes;
+
+          return totalSizeBytes;
+        };
+
+        // Calculate page size and convert it to KB and MB
+        const page_size = calculateTotalPageSize(); // Using the new method to calculate page size
         const page_size_in_kb = (page_size / 1000).toFixed(0); // Convert to KB and fix to 0 decimal places
         const page_size_in_mb = (page_size / 1e6).toFixed(2); // Convert to MB and fix to 2 decimal places
         const emissions_swd_page_size = swd.perByte(page_size, true);
@@ -869,14 +910,14 @@ import {
         const domain = window.location.hostname;
         const hosting_domain = await hosting.check(domain);
 
-        // Austria average intensity - Change Country with ISO Code - All countries are represented by their respective <a href="https://www.iso.org/obp/ui/#search">Alpha-3 ISO country code</a>
+        // Austria average intensity - Change Country with ISO Code
         const { AUT } = averageIntensity.data;
 
         // Dynamic content creation
         function addContentBlock(contents) {
           const details = document.createElement("details");
           const summary = document.createElement("summary");
-          summary.textContent = "CO2 Emissions Information für diese Website"; // Customize your summary text here
+          summary.textContent = "CO2 Emissions Information für diese Website";
           details.appendChild(summary);
 
           contents.forEach((content) => {
@@ -916,6 +957,7 @@ import {
         ]);
       })();
     </script>
+
     <!-- Copy Button -->
     <script>
       document
